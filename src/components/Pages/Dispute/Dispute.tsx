@@ -1,70 +1,73 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import pb from "../../../services/pocketBaseClient";
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router"
+import pb from "../../../services/pocketBaseClient"
 
 interface DisputeData {
-  page: number;
-  perPage: number;
-  totalItems: number;
-  totalPages: number;
-  items: Record<string, any>[];
+  page: number
+  perPage: number
+  totalItems: number
+  totalPages: number
+  items: Record<string, any>[]
 }
 
 function Dispute() {
-  const navigate = useNavigate();
-  const [disputeData, setDisputeData] = useState<DisputeData | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate()
+  const [disputeData, setDisputeData] = useState<DisputeData | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    let ignore = false;
+    let ignore = false
 
     const fetchData = async () => {
       try {
         if (!pb.authStore.isValid) {
-          navigate("/login");
-          return;
+          navigate("/login")
+          return
         }
 
-        const resultList = await pb.collection('dispute').getList(1, 50,);
+        const resultList = await pb.collection("dispute").getList(1, 50)
         console.log(resultList)
         if (!ignore) {
-          setDisputeData(resultList);
+          setDisputeData(resultList)
         }
       } catch (err: any) {
         if (!ignore) {
-          console.error("Failed to fetch dispute data:", err);
-          setError(err.message || "Failed to load dispute data");
+          console.error("Failed to fetch dispute data:", err)
+          setError(err.message || "Failed to load dispute data")
         }
       }
-    };
+    }
 
-    fetchData();
+    fetchData()
 
     return () => {
-      ignore = true;
-    };
-  }, [navigate]);
+      ignore = true
+    }
+  }, [navigate])
 
   // Get table headers from the first item if data exists
   const getHeaders = () => {
-    if (!disputeData?.items?.[0]) return [];
-    return Object.keys(disputeData.items[0]).filter(key =>
-      // Exclude internal fields if needed
-      !['collectionId', 'collectionName'].includes(key)
-    );
-  };
+    if (!disputeData?.items?.[0]) return []
+    return Object.keys(disputeData.items[0]).filter(
+      (key) =>
+        // Exclude internal fields if needed
+        !["collectionId", "collectionName"].includes(key)
+    )
+  }
 
   if (error) {
-    return <div className="alert alert-error">{error}</div>;
+    return <div className="alert alert-error">{error}</div>
   }
 
   if (!disputeData) {
-    return <div className="flex justify-center items-center h-screen">
-      <span className="loading loading-spinner loading-lg"></span>
-    </div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    )
   }
 
-  const headers = getHeaders();
+  const headers = getHeaders()
 
   return (
     <div className="container mx-auto p-4">
@@ -72,7 +75,7 @@ function Dispute() {
         <h1 className="text-2xl font-bold">Dispute Details</h1>
         <button
           className="btn btn-primary"
-          onClick={() => navigate('/dispute/new')}
+          onClick={() => navigate("/dispute/new")}
         >
           Add Dispute
         </button>
@@ -83,7 +86,7 @@ function Dispute() {
           <div className="text-xl mb-4">No disputes found</div>
           <button
             className="btn btn-primary"
-            onClick={() => navigate('/dispute/new')}
+            onClick={() => navigate("/dispute/new")}
           >
             Create your first dispute
           </button>
@@ -94,9 +97,9 @@ function Dispute() {
             <table className="table table-zebra w-full">
               <thead>
                 <tr>
-                  {headers.map(header => (
+                  {headers.map((header) => (
                     <th key={header} className="capitalize">
-                      {header.replace(/_/g, ' ')}
+                      {header.replace(/_/g, " ")}
                     </th>
                   ))}
                 </tr>
@@ -104,11 +107,13 @@ function Dispute() {
               <tbody>
                 {disputeData.items.map((item) => (
                   <tr key={item.id}>
-                    {headers.map(header => (
+                    {headers.map((header) => (
                       <td key={`${item.id}-${header}`}>
-                        {item[header] === true ? "Yes" :
-                          item[header] === false ? "No" :
-                            item[header] || "-"}
+                        {item[header] === true
+                          ? "Yes"
+                          : item[header] === false
+                          ? "No"
+                          : item[header] || "-"}
                       </td>
                     ))}
                   </tr>
@@ -116,13 +121,11 @@ function Dispute() {
               </tbody>
             </table>
           </div>
-          <div className="mt-4">
-            Total Items: {disputeData.totalItems}
-          </div>
+          <div className="mt-4">Total Items: {disputeData.totalItems}</div>
         </>
       )}
     </div>
-  );
+  )
 }
 
-export default Dispute;
+export default Dispute
