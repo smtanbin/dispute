@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router"
 import { useEffect, useState } from "react"
 import pb from "../../services/pocketBaseClient"
+import { ROLES, hasRole } from "../../utils/roles"
 
 interface User {
   id: string
@@ -9,6 +10,7 @@ interface User {
   avatar?: string
   created: string
   updated: string
+  role: string
 }
 
 function Navbar() {
@@ -16,8 +18,8 @@ function Navbar() {
   const [user, setUser] = useState<User | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const [theme, setTheme] = useState<"light" | "dark">(
-    (localStorage.getItem("theme") as "light" | "dark") || "light"
+  const [theme, setTheme] = useState<"lemonade" | "forest">(
+    (localStorage.getItem("theme") as "lemonade" | "forest") || "lemonade"
   )
 
   useEffect(() => {
@@ -26,19 +28,18 @@ function Navbar() {
     const loadUser = async () => {
       try {
         if (pb.authStore.isValid && pb.authStore.model?.id) {
-          const userData = await pb
-            .collection("users")
-            .getOne(pb.authStore.model.id)
+          const userData = pb.authStore.model
           if (!ignore) {
             setUser({
               id: userData.id,
               email: userData.email,
               username: userData.username,
               avatar: userData.avatar
-                ? pb.files.getUrl(userData, userData.avatar)
+                ? pb.files.getUrl(userData, userData.avatar, { thumb: '100x100' })
                 : undefined,
               created: userData.created,
               updated: userData.updated,
+              role: userData.role,
             })
           }
         }
@@ -69,7 +70,7 @@ function Navbar() {
     handleClose()
     pb.authStore.clear()
     setUser(null)
-    navigate("/")
+    navigate("/login")
   }
 
   const getInitial = (user: User) => {
@@ -83,7 +84,7 @@ function Navbar() {
   }
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"))
+    setTheme((prev) => (prev === "lemonade" ? "forest" : "lemonade"))
   }
 
   if (!user) return null
@@ -91,7 +92,15 @@ function Navbar() {
   return (
     <div className="navbar bg-base-100/50 backdrop-blur fixed top-0 z-50">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">Dashboard</a>
+        <a className="btn btn-ghost text-xl" href="/">
+          <img
+            src="/logo.svg"
+            alt="DMS"
+            width="24"
+            height="24"
+            className="h-6 w-6 fill-current"
+          /> DMS
+        </a>
 
         {/* Update Services Dropdown */}
         <div className="dropdown dropdown-hover">
@@ -115,27 +124,11 @@ function Navbar() {
             tabIndex={0}
             className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
           >
-            <li>
-              <a onClick={() => navigate("/users")}>Users</a>
-            </li>
 
-            <li>
-              <a>Service 1</a>
-            </li>
-            <li>
-              <a>Service 2</a>
-            </li>
-            <li>
-              <a>Submenu</a>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </li>
+            {/* Common menu items for all users */}
+            <li><a onClick={() => navigate("/dispute")}>
+              Dispute</a></li>
+            {/* Add more role-based menu items as needed */}
           </ul>
         </div>
       </div>
@@ -144,13 +137,13 @@ function Navbar() {
       {error && <span className="text-error text-sm">{error}</span>}
 
       {/* Replace theme toggle button with swap */}
-      <label className="swap swap-rotate">
+      <label className="swap swap-rotate mr-2">
         <input
           type="checkbox"
           className="theme-controller"
           value={theme}
           onChange={toggleTheme}
-          checked={theme === "dark"}
+          checked={theme === "forest"}
         />
 
         {/* sun icon */}
@@ -195,8 +188,18 @@ function Navbar() {
           tabIndex={0}
           className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
         >
+
+          {user && hasRole(user.role, ROLES.ADMIN) && (
+            <>
+              <li><a onClick={() => navigate("/users")}>Users</a></li>
+              <li>
+                <a href="http://127.0.0.1:8090/_/" >Admin</a>
+              </li>
+
+            </>
+          )}
           <li>
-            <a onClick={handleLogout}>Logout</a>
+            <a className="text-red-500" onClick={handleLogout}>Logout</a>
           </li>
         </ul>
       </div>
