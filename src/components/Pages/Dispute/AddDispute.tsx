@@ -84,130 +84,139 @@ function AddDispute() {
         </button>
       </div>
 
-      {error && (
-        <div className="alert alert-error mb-4">{error}</div>
-      )}
 
-      <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="form-control">
-            <label className="label"><span className="label-text">PAN</span></label>
-            <input type="text" name="PAN" required className="input input-bordered" />
+
+      {/* Right side form */}
+      <div className="md:w-2/3">
+        {error && (
+          <div className="alert alert-error mb-4">{error}</div>
+        )}
+        {/* <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="card bg-base-100 shadow-xl">
+            <div className="card-body">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="form-control">
+                  <label className="label"><span className="label-text">PAN</span></label>
+                  <input type="text" name="PAN" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">Account Number</span></label>
+                  <input type="text" name="account_no" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">Title</span></label>
+                  <input type="text" name="title" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">Document Number</span></label>
+                  <input type="text" name="doc_no" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">Merchant</span></label>
+                  <input type="text" name="merchant" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">Location</span></label>
+                  <input type="text" name="location" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">Acquirer</span></label>
+                  <input type="text" name="acquirer" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">Amount</span></label>
+                  <input type="text" name="amount" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">Transaction Amount</span></label>
+                  <input type="text" name="tr_amount" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">Transaction Date</span></label>
+                  <input type="datetime-local" name="transaction_date" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">Complain Date</span></label>
+                  <input type="datetime-local" name="complain_date" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">Terminal ID</span></label>
+                  <input type="text" name="terminalid" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">RRNSTAN</span></label>
+                  <input type="text" name="RRNSTAN" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">Phoenix Status</span></label>
+                  <input type="text" name="phoenix_status" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">DMS Raise Date</span></label>
+                  <input type="datetime-local" name="DMSRaiseDate" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">Channel</span></label>
+                  <input type="text" name="channel" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">Resolve By</span></label>
+                  <input type="text" name="resolve_by" required className="input input-bordered" />
+                </div>
+
+                <div className="form-control">
+                  <label className="label"><span className="label-text">PSL</span></label>
+                  <select name="psl" className="select select-bordered">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="form-control">
+                <label className="label"><span className="label-text">Remarks</span></label>
+                <textarea name="remarks" className="textarea textarea-bordered h-24" required></textarea>
+              </div>
+
+              <div className="flex justify-end space-x-2">
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  onClick={() => navigate('/dispute')}
+                  disabled={loading}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={loading}
+                >
+                  {loading ? <span className="loading loading-spinner"></span> : 'Create Dispute'}
+                </button>
+              </div>
+            </div>
           </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">Account Number</span></label>
-            <input type="text" name="account_no" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">Title</span></label>
-            <input type="text" name="title" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">Document Number</span></label>
-            <input type="text" name="doc_no" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">Merchant</span></label>
-            <input type="text" name="merchant" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">Location</span></label>
-            <input type="text" name="location" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">Acquirer</span></label>
-            <input type="text" name="acquirer" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">Amount</span></label>
-            <input type="text" name="amount" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">Transaction Amount</span></label>
-            <input type="text" name="tr_amount" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">Transaction Date</span></label>
-            <input type="datetime-local" name="transaction_date" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">Complain Date</span></label>
-            <input type="datetime-local" name="complain_date" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">Terminal ID</span></label>
-            <input type="text" name="terminalid" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">RRNSTAN</span></label>
-            <input type="text" name="RRNSTAN" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">Phoenix Status</span></label>
-            <input type="text" name="phoenix_status" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">DMS Raise Date</span></label>
-            <input type="datetime-local" name="DMSRaiseDate" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">Channel</span></label>
-            <input type="text" name="channel" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">Resolve By</span></label>
-            <input type="text" name="resolve_by" required className="input input-bordered" />
-          </div>
-
-          <div className="form-control">
-            <label className="label"><span className="label-text">PSL</span></label>
-            <select name="psl" className="select select-bordered">
-              <option value="true">Yes</option>
-              <option value="false">No</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="form-control">
-          <label className="label"><span className="label-text">Remarks</span></label>
-          <textarea name="remarks" className="textarea textarea-bordered h-24" required></textarea>
-        </div>
-
-        <div className="flex justify-end space-x-2">
-          <button
-            type="button"
-            className="btn btn-ghost"
-            onClick={() => navigate('/dispute')}
-            disabled={loading}
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={loading}
-          >
-            {loading ? <span className="loading loading-spinner"></span> : 'Create Dispute'}
-          </button>
-        </div>
-      </form>
+        </form> */}
+      </div>
     </div>
+
   );
 }
 
