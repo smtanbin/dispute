@@ -1,76 +1,76 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { useNavigate } from "react-router";
-import pb from "../../../services/pocketBaseClient";
+// import pb from "../../../services/pocketBaseClient";
 
-interface DisputeFormData {
-  PAN: string;
-  account_no: string;
-  title: string;
-  doc_no: string;
-  merchant: string;
-  location: string;
-  acquirer: string;
-  amount: string;
-  tr_amount: string;
-  transaction_date: string;
-  complain_date: string;
-  terminalid: string;
-  RRNSTAN: string;
-  phoenix_status: string;
-  DMSRaiseDate: string;
-  channel: string;
-  resolve: boolean;
-  resolve_by: string;
-  psl: boolean;
-  status: string;
-  remarks: string;
-}
+// interface DisputeFormData {
+//   PAN: string;
+//   account_no: string;
+//   title: string;
+//   doc_no: string;
+//   merchant: string;
+//   location: string;
+//   acquirer: string;
+//   amount: string;
+//   tr_amount: string;
+//   transaction_date: string;
+//   complain_date: string;
+//   terminalid: string;
+//   RRNSTAN: string;
+//   phoenix_status: string;
+//   DMSRaiseDate: string;
+//   channel: string;
+//   resolve: boolean;
+//   resolve_by: string;
+//   psl: boolean;
+//   status: string;
+//   remarks: string;
+// }
 
 function AddDispute() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   setError(null);
 
-    const formData = new FormData(e.currentTarget);
-    const data: Partial<DisputeFormData> = {
-      PAN: formData.get('PAN') as string,
-      account_no: formData.get('account_no') as string,
-      title: formData.get('title') as string,
-      doc_no: formData.get('doc_no') as string,
-      merchant: formData.get('merchant') as string,
-      location: formData.get('location') as string,
-      acquirer: formData.get('acquirer') as string,
-      amount: formData.get('amount') as string,
-      tr_amount: formData.get('tr_amount') as string,
-      transaction_date: formData.get('transaction_date') as string,
-      complain_date: formData.get('complain_date') as string,
-      terminalid: formData.get('terminalid') as string,
-      RRNSTAN: formData.get('RRNSTAN') as string,
-      phoenix_status: formData.get('phoenix_status') as string,
-      DMSRaiseDate: formData.get('DMSRaiseDate') as string,
-      channel: formData.get('channel') as string,
-      resolve: false, // Default value
-      resolve_by: formData.get('resolve_by') as string,
-      psl: formData.get('psl') === 'true',
-      status: 'issued', // Default value
-      remarks: formData.get('remarks') as string,
-    };
+  //   const formData = new FormData(e.currentTarget);
+  //   const data: Partial<DisputeFormData> = {
+  //     PAN: formData.get('PAN') as string,
+  //     account_no: formData.get('account_no') as string,
+  //     title: formData.get('title') as string,
+  //     doc_no: formData.get('doc_no') as string,
+  //     merchant: formData.get('merchant') as string,
+  //     location: formData.get('location') as string,
+  //     acquirer: formData.get('acquirer') as string,
+  //     amount: formData.get('amount') as string,
+  //     tr_amount: formData.get('tr_amount') as string,
+  //     transaction_date: formData.get('transaction_date') as string,
+  //     complain_date: formData.get('complain_date') as string,
+  //     terminalid: formData.get('terminalid') as string,
+  //     RRNSTAN: formData.get('RRNSTAN') as string,
+  //     phoenix_status: formData.get('phoenix_status') as string,
+  //     DMSRaiseDate: formData.get('DMSRaiseDate') as string,
+  //     channel: formData.get('channel') as string,
+  //     resolve: false, // Default value
+  //     resolve_by: formData.get('resolve_by') as string,
+  //     psl: formData.get('psl') === 'true',
+  //     status: 'issued', // Default value
+  //     remarks: formData.get('remarks') as string,
+  //   };
 
-    try {
-      await pb.collection('dispute').create(data);
-      navigate('/dispute');
-    } catch (err: any) {
-      console.error('Failed to create dispute:', err);
-      setError(err.message || 'Failed to create dispute');
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   try {
+  //     await pb.collection('dispute').create(data);
+  //     navigate('/dispute');
+  //   } catch (err: any) {
+  //     console.error('Failed to create dispute:', err);
+  //     setError(err.message || 'Failed to create dispute');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <div className="container mx-auto p-4">
@@ -88,9 +88,9 @@ function AddDispute() {
 
       {/* Right side form */}
       <div className="md:w-2/3">
-        {error && (
-          <div className="alert alert-error mb-4">{error}</div>
-        )}
+        {/* {error && ( */}
+        {/* <div className="alert alert-error mb-4">{error}</div> */}
+        {/* )} */}
         {/* <form onSubmit={handleSubmit} className="space-y-4">
           <div className="card bg-base-100 shadow-xl">
             <div className="card-body">

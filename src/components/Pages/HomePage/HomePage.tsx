@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense } from "react"
+import { useState, Suspense } from "react"
 import { useNavigate } from "react-router"
 import pb from "../../../services/pocketBaseClient"
 import Background from "../../Background/Background"
@@ -9,30 +9,30 @@ import handlePrint from "./handelPrint";
 
 
 function HomePage() {
-  const [disputes, setDisputes] = useState(null);
+  // const [disputes, setDisputes] = useState(null);
   const [disputeId, setDisputeId] = useState("")
   const [searchResult, setSearchResult] = useState<any>(null)
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (!pb.authStore.isValid) {
-      navigate("/");
-    } else {
-      const loadDisputes = async () => {
-        try {
-          const result: any = await pb.collection('dispute').getList(1, 10, {
-            sort: '-created',
-          });
-          setDisputes(result);
-        } catch (error) {
-          console.error('Failed to load disputes:', error);
-        }
-      };
-      loadDisputes();
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   if (!pb.authStore.isValid) {
+  //     navigate("/");
+  //   } else {
+  //     const loadDisputes = async () => {
+  //       try {
+  //         const result: any = await pb.collection('dispute').getList(1, 10, {
+  //           sort: '-created',
+  //         });
+  //         // setDisputes(result);
+  //       } catch (error) {
+  //         console.error('Failed to load disputes:', error);
+  //       }
+  //     };
+  //     loadDisputes();
+  //   }
+  // }, [navigate]);
 
   const handleSearch = async () => {
     if (!disputeId.trim()) return
@@ -68,12 +68,7 @@ function HomePage() {
           <Suspense fallback={<div className="flex justify-center items-center h-screen"><span className="loading loading-spinner loading-lg"></span></div>}>
             <div className="flex flex-col lg:flex-row gap-6">
               {/* Left side login card */}
-              <div className="lg:w-1/3 w-full lg:sticky lg:top-6 self-start">
-                <LoginForm />
-              </div>
-
-              {/* Right side content card */}
-              <div className="lg:w-2/3 w-full">
+              <div className="lg:w-2/3 w-full lg:sticky lg:top-6 self-start">
                 <div className="card bg-base-100/70 backdrop-blur shadow-xl">
                   <div className="card-body">
                     <div className="space-y-4">
@@ -144,6 +139,12 @@ function HomePage() {
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Right side content card */}
+              <div className="lg:w-1/3 w-full">
+                <LoginForm />
+
               </div>
             </div>
           </Suspense>

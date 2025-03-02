@@ -10,6 +10,7 @@ import Dashboard from "../components/Pages/Dashboard/Dashboard"
 import PublicDispute from "../components/Pages/Dispute/PublicDispute/PublicDispute"
 import DisputeDetails from "../components/Pages/Dispute/DisputeDetails"
 import PendingDispute from "../components/Pages/Dispute/PendingDispute"
+import PublicDisputeStatement from "../components/Pages/Dispute/PublicDispute/Statment"
 
 function AppRouter() {
   return (
@@ -18,6 +19,7 @@ function AppRouter() {
         <Route path="/" element={<HomePage />} />
         <Route path="login" element={<HomePage />} />
         <Route path="disputeRegister" element={<PublicDispute />} />
+        <Route path="disputeStatement" element={<PublicDisputeStatement />} />
         <Route path="unauthorized" element={<UnauthorizedPage />} />
 
         {/* Secure routes wrapped in LandingPage layout */}

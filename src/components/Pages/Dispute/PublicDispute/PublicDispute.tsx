@@ -168,7 +168,7 @@ function PublicDispute() {
     setError(null);
     try {
       const myHeaders = new Headers();
-      myHeaders.append("Authorization", `Bearer 096cbc30778898f64617165c18fb8f8d4d721d516df9cb7fcdbe9cd4246491ac71388273de8f33836de2935c4cea932e978fcea014df7fe07a737043a724af56`);
+      myHeaders.append("Authorization", `Bearer 0cf0758141da135777fc936983f910f7df7c934c2ac7aaedda2dc78fd1febc422d09c7509471927573f67b5bc5f5c45a4a4da202618564c8df4b6f1cdf879be6`);
       myHeaders.append("Content-Type", "application/json");
 
       const requestOptions: RequestInit = {
@@ -178,7 +178,7 @@ function PublicDispute() {
         redirect: "follow",
       };
 
-      const response = await fetch('/api/frogi/dispute/pos_atm_search?docnum=' + docno, requestOptions);
+      const response = await fetch('/frogi/dispute/pos_atm_search?docnum=' + docno, requestOptions);
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -501,6 +501,7 @@ function PublicDispute() {
                       }}
                       disabled={loading}
                     >
+
                       {loading ? (
                         <span className="loading loading-spinner loading-xs"></span>
                       ) : (
@@ -510,9 +511,12 @@ function PublicDispute() {
                       )}
                       {loading ? "Searching..." : "Search"}
                     </button>
-                  </div>
-                </div>
 
+                  </div>
+
+                </div>
+                <button className="text-primary btn" onClick={() => navigate("/disputeStatement")}>
+                  Check Transactions</button>
                 <div className="divider my-3"></div>
 
                 {/* Document Timeline content */}

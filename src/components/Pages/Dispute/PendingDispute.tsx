@@ -44,26 +44,26 @@ export interface DisputeRecord {
 }
 
 // Define the order of columns to display
-const DISPLAY_COLUMNS = [
+// const DISPLAY_COLUMNS = [
 
-  'id',
-  'tr_type',
-  'complain_date',
-  'doc_no',
-  'issue_by',
-  'status',
-  'acquirer_bank',
-  'location',
-  'amount',
-  'RRNSTAN',
-  'phoenix_status',
-  'DMSRaiseDate',
-  'resolve',
-  'persial',
-  'channel',
-  'remarks',
-  'note'
-];
+//   'id',
+//   'tr_type',
+//   'complain_date',
+//   'doc_no',
+//   'issue_by',
+//   'status',
+//   'acquirer_bank',
+//   'location',
+//   'amount',
+//   'RRNSTAN',
+//   'phoenix_status',
+//   'DMSRaiseDate',
+//   'resolve',
+//   'persial',
+//   'channel',
+//   'remarks',
+//   'note'
+// ];
 
 function PendingDispute() {
   const navigate = useNavigate()
@@ -116,7 +116,7 @@ function PendingDispute() {
   const handleStatusUpdate = async (id: string, newStatus: "accepted" | "rejected") => {
     try {
       setLoading(true);
-      await pb.collection("disputes").update(id, {
+      const data = await pb.collection("disputes").update(id, {
         status: newStatus,
         accept_by: pb.authStore.record?.id,
         accept_date: new Date().toISOString(),
@@ -124,6 +124,15 @@ function PendingDispute() {
         resolve_by: newStatus === "rejected" ? pb.authStore.record?.id : null
 
       });
+
+
+
+      await pb.collection("notification").create({
+        message: `Dispute #${data.id} has been ${newStatus === "accepted" ? "accepted" : "rejected"} by ${pb.authStore.record?.name}`,
+        "active": true,
+        "level": "'INFO'",
+        "channel": "PendingDispute",
+      })
 
       // After successful update, refresh the data with the same filter
       const resultList: any = await pb.collection("disputes").getList(1, 50, {
@@ -155,16 +164,14 @@ function PendingDispute() {
       {/* Header - make it sticky */}
       <div className="flex justify-between items-center mb-2 sticky top-0 z-10 bg-base-100/80 backdrop-blur py-1">
         <h1 className="text-xl font-bold">Pending Disputes ({disputeData.totalItems})</h1>
-        <button className="btn btn-primary btn-sm" onClick={() => navigate("/dispute")}>Disputes</button>
+        <button className="btn btn-primary m-1" onClick={() => navigate("/dispute")}>Disputes</button>
       </div>
 
       {/* Content */}
       {disputeData.items.length === 0 ? (
-        <div className="flex flex-col items-center justify-center p-4 text-center bg-base-200 rounded-lg">
+        <div className="flex flex-col items-center justify-center p-4 text-center  rounded-lg">
           <div className="text-lg mb-2">No pending disputes found</div>
-          <button className="btn btn-primary btn-sm" onClick={() => navigate("/dispute/new")}>
-            Create your first dispute
-          </button>
+
         </div>
       ) : (
         <div className="overflow-x-auto">

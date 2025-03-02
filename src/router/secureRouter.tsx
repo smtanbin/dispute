@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useNavigate } from "react-router"
 import { useEffect, useState } from "react"
 import pb from "../services/pocketBaseClient"
-import { hasRole, ROLES } from "../utils/roles"
+import { hasRole } from "../utils/roles"
 
 interface ProtectedRouteProps {
   requiredRole?: string;
@@ -21,7 +21,7 @@ function SecureRouter({ requiredRole }: ProtectedRouteProps) {
           await pb.collection("users").authRefresh()
           if (!ignore) {
             const userRole = pb.authStore.model?.role
-            
+
             // First check if user is authenticated
             if (!userRole) {
               setIsAuthenticated(false)
