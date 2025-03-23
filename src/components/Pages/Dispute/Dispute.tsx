@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 import pb from "../../../services/pocketBaseClient"
@@ -39,7 +40,8 @@ export interface DisputeRecord {
   tran: string[];
   collectionId: string;
   note: string;
-  EJ: string[];
+  EJ: string;
+  switch_output: string;
   supporting_doc: string[];
 }
 

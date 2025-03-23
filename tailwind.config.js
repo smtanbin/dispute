@@ -5,7 +5,9 @@ export default {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["light",
+    themes: [
+      "lofi",
+      "light",
       "dark",
       "cupcake",
       "bumblebee",
@@ -19,7 +21,6 @@ export default {
       "garden",
       "forest",
       "aqua",
-      "lofi",
       "pastel",
       "fantasy",
       "wireframe",

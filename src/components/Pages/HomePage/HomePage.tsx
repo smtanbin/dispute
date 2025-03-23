@@ -118,7 +118,7 @@ function HomePage() {
                           className="btn btn-primary w-full md:w-auto"
                           onClick={() => navigate("/disputeRegister")}
                         >
-                          Report Dispute
+                          Report New Dispute
                         </button>
                       </div>
 

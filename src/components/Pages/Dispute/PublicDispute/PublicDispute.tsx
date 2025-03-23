@@ -515,8 +515,10 @@ function PublicDispute() {
                   </div>
 
                 </div>
-                <button className="text-primary btn" onClick={() => navigate("/disputeStatement")}>
-                  Check Transactions</button>
+                <div className="tooltip w-full" data-tip="Click if you dont have document number">
+                  <button className="text-primary btn" onClick={() => navigate("/disputeStatement")}>
+                    Check Transactions</button>
+                </div>
                 <div className="divider my-3"></div>
 
                 {/* Document Timeline content */}
